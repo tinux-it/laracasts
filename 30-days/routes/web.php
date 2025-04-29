@@ -7,8 +7,13 @@ Route::get('/', static function () {
     return view('home');
 });
 Route::get('/jobs', static function() {
+    /**
+     * Do not lazy-load but gather all Models beforehand
+     * This brings down the amount of queries from 100+ to 2 (N+1 problem)
+     */
+    $jobs = Job::with('employer')->get();
     return view('jobs', [
-        'jobs' => Job::all()
+        'jobs' => $jobs,
     ]);
 });
 
