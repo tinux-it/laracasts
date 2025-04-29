@@ -1,63 +1,24 @@
 <?php
 
-use Illuminate\Support\Arr;
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('home');
 });
-Route::get('/jobs', function () {
+Route::get('/jobs', static function() {
     return view('jobs', [
-        'jobs' => [
-            [
-                'id' => 1,
-                'title' => 'Software Engineer',
-                'salary' => '100000',
-                'location' => 'London',
-            ],
-            [
-                'id' => 2,
-                'title' => 'test',
-                'salary' => '200000',
-                'location' => 'London',
-            ],
-            [
-                'id' => 3,
-                'title' => 'teacher',
-                'salary' => '300000',
-                'location' => 'London',
-            ]
-        ]
+        'jobs' => Job::all()
     ]);
 });
 
-Route::get('/jobs/{id}', function ($id) {
-    $jobs = [
-                [
-                    'id' => 1,
-                    'title' => 'Software Engineer',
-                    'salary' => '100000',
-                    'location' => 'London',
-                ],
-                [
-                    'id' => 2,
-                    'title' => 'test',
-                    'salary' => '200000',
-                    'location' => 'London',
-                ],
-                [
-                    'id' => 3,
-                    'title' => 'teacher',
-                    'salary' => '300000',
-                    'location' => 'London',
-                ]
-        ];
+Route::get('/jobs/{id}', static function ($id) {
+    $job = Job::find($id);
 
-    $job = Arr::first($jobs, fn ($job)=> $job['id'] === (int) $id);
     return view('job', ['job' =>$job]);
 });
 
-Route::get('/contact', function () {
+Route::get('/contact', static function () {
     return view('contact');
 });
 
