@@ -21,4 +21,3 @@ Route::get('/jobs/{id}', static function ($id) {
 Route::get('/contact', static function () {
     return view('contact');
 });
-
