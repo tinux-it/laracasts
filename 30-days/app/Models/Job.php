@@ -12,8 +12,12 @@ final class Job extends Model
 
     protected $table = 'job_listings';
 
-    protected $fillable = ['title', 'salary'];
-
+    /**
+     * $fillable only state the fields that are fillable when creating a new object
+     * $guarded states that all fields except those guarded can be filled whne creating a new object
+     */
+//    protected $fillable = ['title', 'salary', 'employer_id'];
+    protected $guarded = [];
     public function employer()
     {
         return $this->belongsTo(Employer::class);
