@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', static function () {
     return view('home');
 });
+
+// Index
 Route::get('/jobs', static function() {
     /**
      * Do not lazy-load but gather all Models beforehand
@@ -19,16 +21,19 @@ Route::get('/jobs', static function() {
     ]);
 });
 
+// Create
 Route::get('/jobs/create', static function () {
     return view('jobs.create');
 });
 
+// Show
 Route::get('/jobs/{id}', static function ($id) {
     $job = Job::find($id);
 
     return view('jobs.show', ['job' =>$job]);
 });
 
+// Store
 Route::post('/jobs', static function () {
     request()->validate([
         'title' => ['required', 'min:3', 'max:25'],
@@ -40,6 +45,43 @@ Route::post('/jobs', static function () {
         'salary' => request('salary'),
         'employer_id' => 1
     ]);
+
+    return redirect('/jobs');
+});
+
+// Edit
+Route::get('/jobs/{id}/edit', static function ($id) {
+    $job = Job::find($id);
+
+    return view('jobs.edit', ['job' =>$job]);
+});
+
+// Update
+Route::patch('/jobs/{job}', static function (Job $job) {
+    // Validate
+    request()->validate([
+        'title' => ['required', 'min:3', 'max:25'],
+        'salary' => ['required'],
+    ]);
+
+    // authorize (On hold....)
+
+    // Update job
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]);
+
+    // Persist
+    $job->save();
+
+    // Redirect to the job page
+    return redirect(sprintf('/jobs/%s', $job->id));
+});
+
+// Destroy
+Route::delete('/jobs/{job}', static function (Job $job) {
+    $job->delete();
 
     return redirect('/jobs');
 });
