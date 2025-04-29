@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employer extends Model
 {
     use Hasfactory;
+
+    public function jobs()
+    {
+        return $this->hasmany(Job::class);
+    }
 }
