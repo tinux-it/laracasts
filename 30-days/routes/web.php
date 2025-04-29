@@ -12,7 +12,7 @@ Route::get('/jobs', static function() {
      * This brings down the amount of queries from 100+ to 2 (N+1 problem)
      * $jobs = Job::with('employer')->get();
      * */
-    $jobs = Job::with('employer')->cursorPaginate(5);
+    $jobs = Job::with('employer')->simplePaginate(5);
 
     return view('jobs', [
         'jobs' => $jobs,
