@@ -3,11 +3,18 @@
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateJob;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    Mail::to('tomemming@hotmail.com')->send(new App\Mail\JobPosted());
+
+    TranslateJob::dispatch();
+//    dispatch(static function () {
+//        logger('Hello from queue');
+//    })->delay(5);
+
+//    Mail::to('tomemming@hotmail.com')->send(new App\Mail\JobPosted());
 
     return 'Done';
 });
