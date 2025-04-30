@@ -9,7 +9,7 @@
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <x-form-field>
                         <x-form-label>Email</x-form-label>
-                        <x-form-input type="email" name="email" id="email" placeholder="Eindbaas@mijndomein.nl" required />
+                        <x-form-input type="email" name="email" id="email" placeholder="Eindbaas@mijndomein.nl" required :value="old('email')" />
                         <x-form-error name="email" />
                     </x-form-field>
 

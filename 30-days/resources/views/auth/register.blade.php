@@ -23,6 +23,11 @@
                         <x-form-input type="password" name="password" id="password" required />
                         <x-form-error name="password" />
                     </x-form-field>
+                    <x-form-field>
+                        <x-form-label>Confirm Password</x-form-label>
+                        <x-form-input type="password" name="password_confirmation" id="password_confirmation" required />
+                        <x-form-error name="password_confirmation" />
+                    </x-form-field>
                 </div>
             </div>
 
