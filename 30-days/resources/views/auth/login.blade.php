@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:heading>
-        Register
+        Login please
     </x-slot:heading>
     <form method="POST" action="/login" class="space-y-8 divide-y divide-gray-900/10">
         @csrf

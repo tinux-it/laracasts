@@ -7,7 +7,10 @@
         This job pays: ${{ $job->salary  }}
     </p>
 
-    <p class="mt-6">
-       <x-button href="/jobs/{{ $job->id }}/edit">Edit job</x-button>
-    </p>
+    {{-- Uses the JobPolicy to check if the user is authorized --}}
+    @can('edit', $job)
+        <p class="mt-6">
+           <x-button href="/jobs/{{ $job->id }}/edit">Edit job</x-button>
+        </p>
+    @endcan
 </x-layout>
