@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400,500,600;1,400,500,600&display=swap" rel="stylesheet">
     @vite(['resources/js/app.js'])
 </head>
-<body class="bg-black">
-<div class="px-10  text-white">
+<body class="bg-black text-white pb-20">
+<div class="px-10">
     <nav class="flex justify-between items-center py-4 border-b border-white/10">
         <div>
             <a href="/">
@@ -27,11 +27,29 @@
         </div>
 
         <div>
-            <a href="">Post a job</a>
+            @guest
+                <div class="space-x-6 font-bold flex">
+                    <a href="/register">Sign up</a>
+                    <a href="/login">Log in</a>
+                </div>
+            @endguest
+            @auth
+                <div class="space-x-6 font-bold flex">
+                    <a href="/job/create">Post a job</a>
+
+                    <form method="post" action="/logout">
+                        @csrf
+                        @method('DELETE')
+                        <button>Log out</button>
+                    </form>
+                </div>
+            @endauth
         </div>
     </nav>
 
     <main class="mt-10 max-w-[1000px] mx-auto">
+        <x-flash-messages />
+
         {{ $slot }}
     </main>
 </div>
