@@ -16,11 +16,14 @@ class JobSeeder extends Seeder
     {
         $tags = Tag::factory(3)->create();
 
-        Job::factory(20)->hasAttached($tags)->create();
+        Job::factory(20)->state([
+            'url' => 'https://tomemming.nl'
+        ])->hasAttached($tags)->create();
 
         // Here
         Job::factory(5)->state([
             'featured' => true,
+            'url' => 'https://tomemming.nl'
             ])
             ->hasAttached($tags)
             ->create();

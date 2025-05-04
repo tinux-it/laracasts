@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixel-positions
+  namespace: pixel-positions
+spec:
+  selector:
+    matchLabels:
+      app: pixel-positions
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pixel-positions
+    spec:
+      initContainers:
+        - name: copy-app
+          image: ghcr.io/tinux-it/laracasts:latest
+          command: [ "sh", "-c", "cp -r /app/. /app-shared" ]
+          volumeMounts:
+            - name: app-volume
+              mountPath: /app-shared
+
+      containers:
+        - name: php-fpm
+          image: ghcr.io/tinux-it/laracasts:latest
+          volumeMounts:
+            - name: app-volume
+              mountPath: /app
+            - name: php-socket
+              mountPath: /php-socket
+          envFrom:
+            - secretRef:
+                name: pixel-positions-secrets
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: app-volume
+              mountPath: /app
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: php-socket
+              mountPath: /php-socket
+          envFrom:
+            - secretRef:
+                name: pixel-positions-secrets
+      volumes:
+        - name: app-volume
+          emptyDir: {}
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+        - name: php-socket
+          emptyDir: {}
