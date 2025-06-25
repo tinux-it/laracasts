@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pixel-positions
-  namespace: pixel-positions
+  namespace: tomemming
 spec:
   selector:
     matchLabels:
